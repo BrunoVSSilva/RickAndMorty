@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.databinding.ActivityMainBinding
+import com.example.rickandmortyapp.ui.home.CharacterListHome
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -19,15 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        enableEdgeToEdge()
 
-
-        viewModel.fetchCharacters(1)
-
-        lifecycleScope.launch {
-            viewModel.characters.collect {
-
-            }
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, CharacterListHome())
+            .commit()
     }
 }
